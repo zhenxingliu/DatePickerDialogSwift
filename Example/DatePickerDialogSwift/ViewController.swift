@@ -31,12 +31,12 @@ class ViewController: UIViewController {
                                           font: UIFont.boldSystemFont(ofSize: 17),
                                           locale:locale ,
                                           showCancelButton: true)
-        datePicker.show("选择日期",
+        datePicker.show("倒计时",
                         doneButtonTitle: "确定",
                         cancelButtonTitle: "取消",
                         minimumDate: threeMonthAgo,
                         maximumDate: nextYearMonthAgo,
-                        datePickerMode: .date) { (date) in
+                        datePickerMode: .countDownTimer) { (date) in
                             if let dt = date {
                                 let formatter = DateFormatter()
                                 formatter.dateFormat = "yyyy-MM-dd"

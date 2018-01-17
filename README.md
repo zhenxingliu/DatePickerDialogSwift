@@ -5,16 +5,46 @@
 [![License](https://img.shields.io/cocoapods/l/DatePickerDialogSwift.svg?style=flat)](http://cocoapods.org/pods/DatePickerDialogSwift)
 [![Platform](https://img.shields.io/cocoapods/p/DatePickerDialogSwift.svg?style=flat)](http://cocoapods.org/pods/DatePickerDialogSwift)
 
-## Example
+## 例子
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
+```swift
+func datePickerTapped() {
+let locale = Locale(identifier: "zh")
+let currentDate = Date()
+var dateComponents = DateComponents()
+dateComponents.month = -3
+let threeMonthAgo = Calendar.current.date(byAdding: dateComponents, to: currentDate)
+dateComponents.month = 12
+let nextYearMonthAgo = Calendar.current.date(byAdding: dateComponents, to: currentDate)
 
-## Requirements
+let datePicker = LWDatePickerDialog(textColor: .red,
+buttonColor: .red,
+font: UIFont.boldSystemFont(ofSize: 17),
+locale:locale ,
+showCancelButton: true)
+datePicker.show("选择日期",
+doneButtonTitle: "确定",
+cancelButtonTitle: "取消",
+minimumDate: threeMonthAgo,
+maximumDate: nextYearMonthAgo,
+datePickerMode: .date) { (date) in
+if let dt = date {
+let formatter = DateFormatter()
+formatter.dateFormat = "yyyy-MM-dd"
+self.textField.text = formatter.string(from: dt)
+}
+}
+}
+```
+更多使用方法可以参照:[DatePickerDialog-iOS-Swift](https://github.com/squimer/DatePickerDialog-iOS-Swift)做的一些个性化改进。
 
-## Installation
+## 要求
 
-DatePickerDialogSwift is available through [CocoaPods](http://cocoapods.org). To install
-it, simply add the following line to your Podfile:
+Swift: 4.0
+iOS:10.0及以上
+
+## 安装
+
 
 ```ruby
 pod 'DatePickerDialogSwift'
@@ -23,6 +53,10 @@ pod 'DatePickerDialogSwift'
 ## Author
 
 zhenxingLiu, 5210167@qq.com
+
+## 特别感谢
+
+[@Squimer](https://github.com/squimer)的工作，我的项目就是在它的[DatePickerDialog-iOS-Swift](https://github.com/squimer/DatePickerDialog-iOS-Swift)做的一些个性化改进。
 
 ## License
 
