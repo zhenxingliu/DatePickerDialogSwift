@@ -7,6 +7,10 @@
 
 ## 例子
 
+### 截图
+![](https://github.com/zhenxingliu/DatePickerDialogSwift/blob/master/images/screen1.png)![](https://github.com/zhenxingliu/DatePickerDialogSwift/blob/master/images/screen2.png)![](https://github.com/zhenxingliu/DatePickerDialogSwift/blob/master/images/screen3.png)![](https://github.com/zhenxingliu/DatePickerDialogSwift/blob/master/images/screen4.png)
+
+### 代码
 ```swift
 func datePickerTapped() {
 let locale = Locale(identifier: "zh")
