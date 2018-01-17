@@ -1,10 +1,12 @@
 PODS:
-  - DatePickerDialogSwift (0.1.0)
+  - DatePickerDialogSwift (0.1.0):
+    - Hue (~> 3.0.0)
   - FBSnapshotTestCase (2.1.4):
     - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
   - FBSnapshotTestCase/Core (2.1.4)
   - FBSnapshotTestCase/SwiftSupport (2.1.4):
     - FBSnapshotTestCase/Core
+  - Hue (3.0.1)
   - Nimble (7.0.3)
   - Nimble-Snapshots (6.3.0):
     - Nimble-Snapshots/Core (= 6.3.0)
@@ -25,12 +27,13 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  DatePickerDialogSwift: 91e6d3d3a829afb9786364f9d8237db860804555
+  DatePickerDialogSwift: f396856c9d9c75be2364876a900750cce10372fd
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
+  Hue: 93e852fa6211ab35922ad8c293f51c43d6c79eb2
   Nimble: 7f5a9c447a33002645a071bddafbfb24ea70e0ac
   Nimble-Snapshots: f5459b5b091678dc942d03ec4741cacb58ba4a52
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
 
-PODFILE CHECKSUM: d501020235b9cac4434a117b3e546929ddd759c7
+PODFILE CHECKSUM: 04adbfa806b26cbf753d4176cea4b060efd17d4a
 
 COCOAPODS: 1.4.0.beta.2

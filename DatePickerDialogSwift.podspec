@@ -24,7 +24,7 @@ TODO: Add long description of the pod here.
   s.homepage         = 'https://github.com/zhenxingliu/DatePickerDialogSwift'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { '5210167@qq.com' => '5210167@qq.com' }
+  s.author           = { 'zhenxingLiu' => '5210167@qq.com' }
   s.source           = { :git => 'https://github.com/zhenxingliu/DatePickerDialogSwift.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 

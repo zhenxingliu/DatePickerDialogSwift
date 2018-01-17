@@ -1,7 +1,8 @@
 use_frameworks!
 
 target 'DatePickerDialogSwift_Example' do
-  pod 'DatePickerDialogSwift', :path => '../'
+    use_frameworks!
+    pod 'DatePickerDialogSwift', :path => '../'
 
   target 'DatePickerDialogSwift_Tests' do
     inherit! :search_paths
