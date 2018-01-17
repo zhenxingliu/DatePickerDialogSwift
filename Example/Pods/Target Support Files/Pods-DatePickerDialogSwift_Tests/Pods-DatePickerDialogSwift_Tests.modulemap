@@ -1,0 +1,6 @@
+framework module Pods_DatePickerDialogSwift_Tests {
+  umbrella header "Pods-DatePickerDialogSwift_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}

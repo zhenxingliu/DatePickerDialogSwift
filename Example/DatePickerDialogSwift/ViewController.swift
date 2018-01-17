@@ -7,18 +7,50 @@
 //
 
 import UIKit
+import DatePickerDialogSwift
 
 class ViewController: UIViewController {
-
+    @IBOutlet weak var textField: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        textField.delegate = self
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func datePickerTapped() {
+        let currentDate = Date()
+        var dateComponents = DateComponents()
+        dateComponents.month = -3
+        let threeMonthAgo = Calendar.current.date(byAdding: dateComponents, to: currentDate)
+        
+        let datePicker = LWDatePickerDialog(textColor: .red,
+                                          buttonColor: .red,
+                                          font: UIFont.boldSystemFont(ofSize: 17),
+                                          showCancelButton: true)
+        datePicker.show("DatePickerDialog",
+                        doneButtonTitle: "确定",
+                        cancelButtonTitle: "取消",
+                        minimumDate: threeMonthAgo,
+                        maximumDate: currentDate,
+                        datePickerMode: .date) { (date) in
+                            if let dt = date {
+                                let formatter = DateFormatter()
+                                formatter.dateFormat = "yyyy-MM-dd"
+                                self.textField.text = formatter.string(from: dt)
+                            }
+        }
     }
+}
 
+extension ViewController: UITextFieldDelegate {
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        if textField == self.textField {
+            datePickerTapped()
+            return false
+        }
+        
+        return true
+    }
 }
 
