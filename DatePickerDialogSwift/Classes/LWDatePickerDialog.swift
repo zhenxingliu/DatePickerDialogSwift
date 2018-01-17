@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import Hue
 
 private extension Selector {
     //按钮点击
@@ -17,24 +17,61 @@ private extension Selector {
 
 
 struct LWDialogStyle {
-    //let titleColor = UIColor
+    //title
+    static let titleColor = UIColor(hex: "#FFFFFF")
+    static let titleTextFont = UIFont(name: "PingFangSC-Regular", size: 18)
+    static let titleViewBackColor = UIColor(hex: "#FB4747")
+    
+    //DatePicker unSelected TextColor Font
+    static let dpUnSelTextColor = UIColor(hex: "#999999")
+    static let dpUnSelTextFont = UIFont(name: "PingFangSC-Regular", size: 18)
+    
+    static let dpSelTextColor = UIColor(hex: "#FB4747")
+    static let dpSelTextFont = UIFont(name: "PingFangSC-Regular", size: 23)
+    
+    //button
+    static let okButtonTextColor = UIColor(hex: "#FFFFFF")
+    static let okButtonFont = UIFont(name: "PingFangSC-Regular", size: 16)
+    static let okButtonBackColor = UIColor(hex: "#FB4747")
+    
+    static let cancelButtonTextColor = UIColor(hex: "#FFFFFF")
+    static let cancelButtonFont = UIFont(name: "PingFangSC-Regular", size: 16)
+    static let cancelButtonBackColor = UIColor(hex: "#CCCCCC")
+    
+    // MARK: - Constants
+    static let defaultWidth:CGFloat = 300
+    
+    static let defaultTitleContainerHeight:CGFloat = 50
+    static let defaultTitleHeight:CGFloat = 35
+    
+    static let defaultDatePickerHeight:CGFloat = 230
+    
+    static let defaultButtonContainerHeight:CGFloat = 50
+    static let defaultButtonHeight: CGFloat = 35
+    
+    static let defaultButtonSpacerHeight: CGFloat = 1
+    
+    static let cornerRadius: CGFloat = 15
+    static let doneButtonTag: Int     = 1
+    
 }
 
 
 open class LWDatePickerDialog: UIView {
     //回调类型定义
     public typealias DatePickerCallback = ( Date? ) -> Void
-    
-    // MARK: - Constants
-    private let kDefaultButtonHeight: CGFloat = 50
-    private let kDefaultButtonSpacerHeight: CGFloat = 1
-    private let kCornerRadius: CGFloat = 7
-    private let kDoneButtonTag: Int     = 1
-    
+
     // MARK: - Views
     private var dialogView: UIView!
+    //title view
+    private var titleContainerView:UIView!
     private var titleLabel: UILabel!
+    
+    //picker view
     open var datePicker: UIDatePicker!
+    
+    //button view
+    private var buttonContainerView:UIView!
     private var cancelButton: UIButton!
     private var doneButton: UIButton!
     
@@ -42,9 +79,10 @@ open class LWDatePickerDialog: UIView {
     private var defaultDate: Date?
     private var datePickerMode: UIDatePickerMode?
     private var callback: DatePickerCallback?
+    
     var showCancelButton: Bool = false
     var locale: Locale?
-    
+
     private var textColor: UIColor!
     private var buttonColor: UIColor!
     private var font: UIFont!
@@ -89,7 +127,7 @@ open class LWDatePickerDialog: UIView {
     /// Handle device orientation changes
     @objc func deviceOrientationDidChange(_ notification: Notification) {
         self.frame = UIScreen.main.bounds
-        let dialogSize = CGSize(width: 300, height: 230 + kDefaultButtonHeight + kDefaultButtonSpacerHeight)
+        let dialogSize = CGSize(width: LWDialogStyle.defaultWidth,height: LWDialogStyle.defaultTitleContainerHeight + LWDialogStyle.defaultDatePickerHeight + LWDialogStyle.defaultButtonContainerHeight)
         dialogView.frame = CGRect(x: (UIScreen.main.bounds.size.width - dialogSize.width) / 2,
                                   y: (UIScreen.main.bounds.size.height - dialogSize.height) / 2,
                                   width: dialogSize.width,
@@ -175,7 +213,8 @@ open class LWDatePickerDialog: UIView {
     /// Creates the container view here: create the dialog, then add the custom content and buttons
     private func createContainerView() -> UIView {
         let screenSize = UIScreen.main.bounds.size
-        let dialogSize = CGSize(width: 300, height: 230 + kDefaultButtonHeight + kDefaultButtonSpacerHeight)
+        //title + datePicker + button height
+        let dialogSize = CGSize(width: LWDialogStyle.defaultWidth, height: LWDialogStyle.defaultTitleContainerHeight + LWDialogStyle.defaultDatePickerHeight + LWDialogStyle.defaultButtonContainerHeight)
         
         // For the black background
         self.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height)
@@ -193,11 +232,12 @@ open class LWDatePickerDialog: UIView {
                            UIColor(red: 233/255, green: 233/255, blue: 233/255, alpha: 1).cgColor,
                            UIColor(red: 218/255, green: 218/255, blue: 218/255, alpha: 1).cgColor]
         
-        let cornerRadius = kCornerRadius
+        let cornerRadius = LWDialogStyle.cornerRadius
         gradient.cornerRadius = cornerRadius
-        container.layer.insertSublayer(gradient, at: 0)
         
+        container.layer.insertSublayer(gradient, at: 0)
         container.layer.cornerRadius = cornerRadius
+        container.layer.masksToBounds = true
         container.layer.borderColor = UIColor(red: 198/255, green: 198/255, blue: 198/255, alpha: 1).cgColor
         container.layer.borderWidth = 1
         container.layer.shadowRadius = cornerRadius + 5
@@ -208,63 +248,69 @@ open class LWDatePickerDialog: UIView {
                                                   cornerRadius: container.layer.cornerRadius).cgPath
         
         // There is a line above the button
-        let yPosition = container.bounds.size.height - kDefaultButtonHeight - kDefaultButtonSpacerHeight
-        let lineView = UIView(frame: CGRect(x: 0,
-                                            y: yPosition,
-                                            width: container.bounds.size.width,
-                                            height: kDefaultButtonSpacerHeight))
-        lineView.backgroundColor = UIColor(red: 198/255, green: 198/255, blue: 198/255, alpha: 1)
-        container.addSubview(lineView)
+//        let yPosition = container.bounds.size.height - kDefaultButtonHeight - kDefaultButtonSpacerHeight
+//        let lineView = UIView(frame: CGRect(x: 0,
+//                                            y: yPosition,
+//                                            width: container.bounds.size.width,
+//                                            height: kDefaultButtonSpacerHeight))
+//        lineView.backgroundColor = UIColor(red: 198/255, green: 198/255, blue: 198/255, alpha: 1)
+//        container.addSubview(lineView)
         
         //Title
-        self.titleLabel = UILabel(frame: CGRect(x: 10, y: 10, width: 280, height: 30))
-        self.titleLabel.textAlignment = .center
-        self.titleLabel.textColor = self.textColor
-        self.titleLabel.font = self.font.withSize(17)
-        container.addSubview(self.titleLabel)
-        
+        self.titleContainerView = UIView(frame: CGRect(x: 0, y: 0, width: LWDialogStyle.defaultWidth, height: LWDialogStyle.defaultTitleContainerHeight))
+        self.titleContainerView.backgroundColor = LWDialogStyle.titleViewBackColor
+        self.titleLabel = UILabel(frame: CGRect(x: 20, y: (LWDialogStyle.defaultTitleContainerHeight-LWDialogStyle.defaultTitleHeight)/2, width: LWDialogStyle.defaultWidth - 50, height: LWDialogStyle.defaultTitleHeight))
+        self.titleLabel.textAlignment = .left
+        self.titleLabel.textColor = LWDialogStyle.titleColor
+        self.titleLabel.font = LWDialogStyle.titleTextFont
+        self.titleContainerView.addSubview(self.titleLabel)
+        container.addSubview(self.titleContainerView)
+        //DatePicker
         self.datePicker = configuredDatePicker()
         container.addSubview(self.datePicker)
         
         // Add the buttons
-        addButtonsToView(container: container)
+        self.buttonContainerView = UIView(frame: CGRect(x: 0, y: LWDialogStyle.defaultTitleContainerHeight + LWDialogStyle.defaultDatePickerHeight, width: LWDialogStyle.defaultWidth, height: LWDialogStyle.defaultButtonContainerHeight))
+        self.backgroundColor = UIColor.white
+        addButtonsToView(container: buttonContainerView)
+        container.addSubview(self.buttonContainerView)
         
         return container
     }
     
     fileprivate func configuredDatePicker() -> UIDatePicker {
-        let datePicker = UIDatePicker(frame: CGRect(x: 0, y: 30, width: 0, height: 0))
-        datePicker.setValue(self.textColor, forKeyPath: "textColor")
+        let datePicker = UIDatePicker(frame: CGRect(x: 0, y: LWDialogStyle.defaultTitleContainerHeight, width: 0, height: 0))
+        datePicker.setValue(LWDialogStyle.dpSelTextColor, forKeyPath: "textColor")
         datePicker.autoresizingMask = .flexibleRightMargin
-        datePicker.frame.size.width = 300
-        datePicker.frame.size.height = 216
+        datePicker.frame.size.width = LWDialogStyle.defaultWidth
+        datePicker.frame.size.height = LWDialogStyle.defaultDatePickerHeight
         return datePicker
     }
     
     /// Add buttons to container
     private func addButtonsToView(container: UIView) {
-        var buttonWidth = container.bounds.size.width / 2
+        var buttonWidth = (container.bounds.size.width - 20*2) / 2
         
         var leftButtonFrame = CGRect(
-            x: 0,
-            y: container.bounds.size.height - kDefaultButtonHeight,
+            x: 10,
+            y: (container.bounds.size.height - LWDialogStyle.defaultButtonHeight)/2,
             width: buttonWidth,
-            height: kDefaultButtonHeight
+            height: LWDialogStyle.defaultButtonHeight
         )
         var rightButtonFrame = CGRect(
-            x: buttonWidth,
-            y: container.bounds.size.height - kDefaultButtonHeight,
+            x: 10 + buttonWidth + 10 * 2,
+            y: (container.bounds.size.height - LWDialogStyle.defaultButtonHeight)/2,
             width: buttonWidth,
-            height: kDefaultButtonHeight
+            height: LWDialogStyle.defaultButtonHeight
         )
         if showCancelButton == false {
             buttonWidth = container.bounds.size.width
             leftButtonFrame = CGRect()
             rightButtonFrame = CGRect(
-                x: 0,
-                y: container.bounds.size.height - kDefaultButtonHeight,
+                x: (LWDialogStyle.defaultWidth - buttonWidth) / 2,
+                y: (container.bounds.size.height - LWDialogStyle.defaultButtonHeight)/2,
                 width: buttonWidth,
-                height: kDefaultButtonHeight
+                height: LWDialogStyle.defaultButtonHeight
             )
         }
         let interfaceLayoutDirection = UIApplication.shared.userInterfaceLayoutDirection
@@ -273,31 +319,32 @@ open class LWDatePickerDialog: UIView {
         if showCancelButton {
             self.cancelButton = UIButton(type: .custom) as UIButton
             self.cancelButton.frame = isLeftToRightDirection ? leftButtonFrame : rightButtonFrame
-            self.cancelButton.setTitleColor(self.buttonColor, for: .normal)
-            self.cancelButton.setTitleColor(self.buttonColor, for: .highlighted)
-            self.cancelButton.titleLabel!.font = self.font.withSize(14)
-            self.cancelButton.layer.cornerRadius = kCornerRadius
+            self.cancelButton.setTitleColor(LWDialogStyle.cancelButtonTextColor, for: .normal)
+            self.cancelButton.setTitleColor(LWDialogStyle.cancelButtonTextColor, for: .highlighted)
+            self.cancelButton.backgroundColor = LWDialogStyle.cancelButtonBackColor
+            self.cancelButton.titleLabel!.font = LWDialogStyle.cancelButtonFont
+            self.cancelButton.layer.cornerRadius = LWDialogStyle.cornerRadius
             self.cancelButton.addTarget(self, action: .buttonTapped, for: .touchUpInside)
             container.addSubview(self.cancelButton)
         }
         self.doneButton = UIButton(type: .custom) as UIButton
         self.doneButton.frame = isLeftToRightDirection ? rightButtonFrame : leftButtonFrame
-        self.doneButton.tag = kDoneButtonTag
-        self.doneButton.setTitleColor(self.buttonColor, for: .normal)
-        self.doneButton.setTitleColor(self.buttonColor, for: .highlighted)
-        self.doneButton.titleLabel!.font = self.font.withSize(14)
-        self.doneButton.layer.cornerRadius = kCornerRadius
+        self.doneButton.tag = LWDialogStyle.doneButtonTag
+        self.doneButton.backgroundColor = LWDialogStyle.okButtonBackColor
+        self.doneButton.setTitleColor(LWDialogStyle.okButtonTextColor, for: .normal)
+        self.doneButton.setTitleColor(LWDialogStyle.okButtonTextColor, for: .highlighted)
+        self.doneButton.titleLabel!.font = LWDialogStyle.okButtonFont
+        self.doneButton.layer.cornerRadius = LWDialogStyle.cornerRadius
         self.doneButton.addTarget(self, action: .buttonTapped, for: .touchUpInside)
         container.addSubview(self.doneButton)
     }
     
     @objc func buttonTapped(sender: UIButton!) {
-        if sender.tag == kDoneButtonTag {
+        if sender.tag == LWDialogStyle.doneButtonTag {
             self.callback?(self.datePicker.date)
         } else {
             self.callback?(nil)
         }
-        
         close()
     }
     

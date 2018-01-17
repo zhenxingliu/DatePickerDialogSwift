@@ -22,7 +22,7 @@ pod 'DatePickerDialogSwift'
 
 ## Author
 
-5210167@qq.com, 5210167@qq.com
+zhenxingLiu, 5210167@qq.com
 
 ## License
 

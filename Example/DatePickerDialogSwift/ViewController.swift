@@ -18,20 +18,24 @@ class ViewController: UIViewController {
     }
     
     func datePickerTapped() {
+        let locale = Locale(identifier: "zh")
         let currentDate = Date()
         var dateComponents = DateComponents()
         dateComponents.month = -3
         let threeMonthAgo = Calendar.current.date(byAdding: dateComponents, to: currentDate)
+        dateComponents.month = 12
+        let nextYearMonthAgo = Calendar.current.date(byAdding: dateComponents, to: currentDate)
         
         let datePicker = LWDatePickerDialog(textColor: .red,
                                           buttonColor: .red,
                                           font: UIFont.boldSystemFont(ofSize: 17),
+                                          locale:locale ,
                                           showCancelButton: true)
-        datePicker.show("DatePickerDialog",
+        datePicker.show("选择日期",
                         doneButtonTitle: "确定",
                         cancelButtonTitle: "取消",
                         minimumDate: threeMonthAgo,
-                        maximumDate: currentDate,
+                        maximumDate: nextYearMonthAgo,
                         datePickerMode: .date) { (date) in
                             if let dt = date {
                                 let formatter = DateFormatter()

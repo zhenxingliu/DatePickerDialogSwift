@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = 'DatePickerDialogSwift'
-  s.version          = '0.1.0'
-  s.summary          = 'A short description of DatePickerDialogSwift.'
+  s.version          = '0.1.1'
+  s.summary          = '一个简单易用的日期选择控件'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+    一个简单易用的日期选择控件,此日期控件参照，https://github.com/squimer/DatePickerDialog-iOS-Swift/blob/master/Sources/DatePickerDialog.swift所改写
                        DESC
 
   s.homepage         = 'https://github.com/zhenxingliu/DatePickerDialogSwift'
