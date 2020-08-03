@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Hue
 
 private extension Selector {
     //按钮点击
@@ -18,25 +17,25 @@ private extension Selector {
 
 struct LWDialogStyle {
     //title
-    static let titleColor = UIColor(hex: "#FFFFFF")
-    static let titleTextFont = UIFont(name: "PingFangSC-Regular", size: 18)
-    static let titleViewBackColor = UIColor(hex: "#FB4747")
+    static let titleColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 1)
+    static let titleTextFont = UIFont.boldSystemFont(ofSize: 17)
+    static let titleViewBackColor = UIColor(red: 12/255.0, green: 60/255.0, blue: 96/255.0, alpha: 1)
     
     //DatePicker unSelected TextColor Font
-    static let dpUnSelTextColor = UIColor(hex: "#999999")
-    static let dpUnSelTextFont = UIFont(name: "PingFangSC-Regular", size: 18)
+    static let dpUnSelTextColor = UIColor(red: 153/255.0, green: 153/255.0, blue: 153/255.0, alpha: 1)
+    static let dpUnSelTextFont = UIFont.systemFont(ofSize: 17)
     
-    static let dpSelTextColor = UIColor(hex: "#FB4747")
-    static let dpSelTextFont = UIFont(name: "PingFangSC-Regular", size: 23)
+    static let dpSelTextColor = UIColor(red: 12/255.0, green: 60/255.0, blue: 96/255.0, alpha: 1)
+    static let dpSelTextFont = UIFont.systemFont(ofSize: 23)
     
     //button
-    static let okButtonTextColor = UIColor(hex: "#FFFFFF")
-    static let okButtonFont = UIFont(name: "PingFangSC-Regular", size: 16)
-    static let okButtonBackColor = UIColor(hex: "#FB4747")
+    static let okButtonTextColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 1)
+    static let okButtonFont = UIFont.boldSystemFont(ofSize: 15)
+    static let okButtonBackColor = UIColor(red: 12/255.0, green: 60/255.0, blue: 96/255.0, alpha: 1)
     
-    static let cancelButtonTextColor = UIColor(hex: "#FFFFFF")
-    static let cancelButtonFont = UIFont(name: "PingFangSC-Regular", size: 16)
-    static let cancelButtonBackColor = UIColor(hex: "#CCCCCC")
+    static let cancelButtonTextColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 1)
+    static let cancelButtonFont = UIFont.boldSystemFont(ofSize: 15)
+    static let cancelButtonBackColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1)
     
     // MARK: - Constants
     static let defaultWidth:CGFloat = 300
@@ -77,7 +76,7 @@ open class LWDatePickerDialog: UIView {
     
     // MARK: - Variables
     private var defaultDate: Date?
-    private var datePickerMode: UIDatePickerMode?
+    private var datePickerMode: UIDatePicker.Mode?
     private var callback: DatePickerCallback?
     
     var showCancelButton: Bool = false
@@ -140,7 +139,7 @@ open class LWDatePickerDialog: UIView {
                    cancelButtonTitle: String = "Cancel",
                    defaultDate: Date = Date(),
                    minimumDate: Date? = nil, maximumDate: Date? = nil,
-                   datePickerMode: UIDatePickerMode = .dateAndTime,
+                   datePickerMode: UIDatePicker.Mode = .dateAndTime,
                    callback: @escaping DatePickerCallback) {
         self.titleLabel.text = title
         self.doneButton.setTitle(doneButtonTitle, for: .normal)
@@ -150,7 +149,7 @@ open class LWDatePickerDialog: UIView {
         self.datePickerMode = datePickerMode
         self.callback = callback
         self.defaultDate = defaultDate
-        self.datePicker.datePickerMode = self.datePickerMode ?? UIDatePickerMode.date
+        self.datePicker.datePickerMode = self.datePickerMode ?? UIDatePicker.Mode.date
         self.datePicker.date = self.defaultDate ?? Date()
         self.datePicker.maximumDate = maximumDate
         self.datePicker.minimumDate = minimumDate
@@ -161,12 +160,12 @@ open class LWDatePickerDialog: UIView {
         guard let appDelegate = UIApplication.shared.delegate else { fatalError() }
         guard let window = appDelegate.window else { fatalError() }
         window?.addSubview(self)
-        window?.bringSubview(toFront: self)
+        window?.bringSubviewToFront(self)
         window?.endEditing(true)
         
         NotificationCenter.default.addObserver(self,
                                                selector: .deviceOrientationDidChange,
-                                               name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+                                               name: UIDevice.orientationDidChangeNotification, object: nil)
         
         /* Anim */
         UIView.animate(
@@ -314,7 +313,7 @@ open class LWDatePickerDialog: UIView {
             )
         }
         let interfaceLayoutDirection = UIApplication.shared.userInterfaceLayoutDirection
-        let isLeftToRightDirection = interfaceLayoutDirection == .leftToRight
+        let isLeftToRightDirection = interfaceLayoutDirection == .rightToLeft
         
         if showCancelButton {
             self.cancelButton = UIButton(type: .custom) as UIButton
