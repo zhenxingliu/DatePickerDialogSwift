@@ -83,7 +83,6 @@
 		756564ABAF2892FE7140C92A1CDDCF65 /* UIImage+Snapshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E6B9FB8295B940D28884279AEE102B /* UIImage+Snapshot.m */; };
 		75ABB48E3C30C2D736C3D05D6FD566A8 /* BeNil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8D1F61E76BCF41F4D3DAB4C4E4DF0E /* BeNil.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		7B5222991D1C53DF737242CA6C90012C /* CwlCatchException.m in Sources */ = {isa = PBXBuildFile; fileRef = 979671D92024D65E8C7C9DBC62F15E62 /* CwlCatchException.m */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
-		7D8F7F3AC1777D0B873ACE8FBD0966D0 /* Hue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAF27F4FEB81B767463F22AEE17E1C32 /* Hue.framework */; };
 		7E0C9AE6468A5DF91F0F4C7A387D725C /* BeAKindOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57421B3AEFDB04371D3755279DACA48A /* BeAKindOf.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		7E9B14D5F8842A86CA86F2AF45230725 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE4F44857FABA30AA70BAE20470F1A18 /* XCTest.framework */; };
 		7FC992F4BD0376ACB4F97F9180B0F0B5 /* FBSnapshotTestCase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 518BA3670AB0888CC61D047B314C76D6 /* FBSnapshotTestCase.framework */; };
@@ -488,7 +487,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				62FB8CB9DBDA85DF24DA6407C1204486 /* Foundation.framework in Frameworks */,
-				7D8F7F3AC1777D0B873ACE8FBD0966D0 /* Hue.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
